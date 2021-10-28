@@ -39,22 +39,19 @@ export default function Phonebook() {
       alert(`${data.name} is already in your phonebook!`);
     } else {
       data.id = uuidv4();
-      setContacts((state) => ({ contacts: [data, ...contacts] }));
+      setContacts((state) => [data, ...state]);
     }
   };
 
   const deleteContacts = (id) => {
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter((contact) => contact.id !== id),
-    }));
+    setContacts((s) => s.filter((contact) => contact.id !== id));
   };
 
   const getFilter = (e) => {
-    this.setState({ filter: e.currentTarget.value.toLowerCase() });
+    setFilter(e.currentTarget.value.toLowerCase());
   };
 
   const getFiltredContacts = () => {
-    const { contacts, filter } = this.state;
     return contacts.filter((person) =>
       person.name.toLowerCase().includes(filter)
     );
