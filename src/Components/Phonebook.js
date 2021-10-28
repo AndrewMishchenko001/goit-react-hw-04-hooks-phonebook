@@ -14,6 +14,16 @@ export default function Phonebook() {
     const [state, setState] = useState(() => {
       return JSON.parse(window.localStorage.getItem(key)) || initialValue;
     });
+
+    useEffect(() => {
+      window.localStorage.setItem(key, JSON.stringify(state));
+      const localstorageArrayLength =
+        JSON.parse(window.localStorage.getItem(key)).length === 0;
+      if (localstorageArrayLength) {
+        setState(initialValue);
+      }
+    }, [initialValue, key, state]);
+    return [state, setState];
   };
 
   const [contacts, setContacts] = useLocalStorage("contacts", contactsData);
